@@ -1,6 +1,6 @@
 # Chrome Web Store 提交材料
 
-状态：2026-10-10 已提交 0.1.2 审核，后台显示 Pending review。已设置审核通过后自动发布；当前尚未正式上线。真实登录 X 的 Chrome 时间线连续刷新三次验证计数和关系，自动化测试和 GitHub CI 已通过。英文、中文介绍及图标、截图、宣传图、隐私问卷与审核说明均已保存；分发设置为免费、公开、所有地区。
+状态：2026-10-10 已撤回 0.1.2 审核并上传 0.1.3，后台 Package 已确认草稿版本为 0.1.3；尚待重新提交审核，当前未正式上线。0.1.3 已通过真实登录 X 的超过五分钟滚动和返回顶部测试，旧快照保持显示并提示可能已变化；自动化测试和 GitHub CI 已通过。英文、中文介绍及图标、截图、宣传图、隐私问卷与审核说明均已保存；分发设置为免费、公开、所有地区。
 
 商店条目 ID：`khjpghbgccnkkikdmmlkoogjigojnklc`。此 ID 不代表插件已经上线。
 
@@ -26,6 +26,8 @@ XX 在推文作者旁展示粉丝数、关注数和关注关系，帮助你在�
 - 设置自动保存，系统浅色和深色样式。
 
 数据说明：XX 仅读取 X 网站已经加载的响应，不额外请求资料接口。账号数据在当前标签页本地处理，设置保存在本机。没有数据上传、统计追踪或广告。
+
+已收到的账号数据会在滚动时保留。悬停可查看超过五分钟的数据提示，这些数据可能已变化。
 
 安装后请刷新 X。部分响应不包含计数或关注关系，相关项目会显示未知；XX 不保证每条推文的所有字段都能获取。X 网站结构变化可能影响功能。
 
@@ -53,6 +55,8 @@ Features:
 - Auto-saved local settings and system light/dark styles.
 
 XX reads responses the X website has already loaded. It does not request additional profile data. Account information is processed locally in the current tab; preferences are saved locally. There is no data upload, analytics, advertising or tracking.
+
+Already received account data remains available while scrolling. Hover over fields to see when a snapshot is more than five minutes old and may have changed.
 
 Refresh X after installing. Some responses omit counts or relationship fields, which will remain unknown. Availability is not guaranteed for every author. Changes to X's website may affect compatibility.
 
@@ -97,7 +101,7 @@ No test credentials are bundled or supplied. The extension does not operate acco
 ## 提交记录
 
 - 开发者账号已注册，公开发布者显示名：The Faceless。
-- 已在真实 Chrome 中安装 0.1.2，验证 X 时间线计数和关注关系。已修复首页新计数字段解析，并验证多次刷新；真正缺失字段按设计显示未知。
+- 已在真实 Chrome 中安装 0.1.3，验证 X 时间线计数和关注关系。已修复首页新计数字段解析，并验证多次刷新；真正缺失字段按设计显示未知。
 - 仓库与隐私政策已公开，匿名访问返回 HTTP 200：https://github.com/Tryking/xx-extension/blob/main/PRIVACY.md
 - 商店介绍/主页：https://github.com/Tryking/xx-extension
 - 公开联系邮箱已验证：ktingdeng@gmail.com。
@@ -105,4 +109,5 @@ No test credentials are bundled or supplied. The extension does not operate acco
 - 已上传图标、小型宣传图和英文/中文功能截图；设置页的示例数据已明确标注。
 - 已依据后台当前问卷填写数据使用披露，不将本地处理误写为完全不访问用户数据。
 - 已保存英文审核步骤；不向审核人员提供个人账号密码。
-- 提交确认窗口显示 Your extension was submitted for review；条目状态为 Pending review。
+- 0.1.2 的审核已取消，0.1.3 已上传且包页面显示 Draft / Version 0.1.3；重新提交审核尚未完成。
+- 真实 X 页面向下滚动至约 25,000 像素，超过五分钟后返回顶部，9 个已观察作者的数据仍显示，其中 6 个包含旧快照提示。
