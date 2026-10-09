@@ -82,8 +82,10 @@ No test credentials are bundled or supplied. The extension does not operate acco
 
 ## 仍需确认
 
-- 开发者账号注册、付款和协议（如后台要求）。
+- 开发者账号已注册，公开发布者显示名：The Faceless。
 - 真实 Chrome 中安装并验证 X 时间线。
-- 提供免登录可访问的隐私政策网址。私有 GitHub 仓库内的 PRIVACY.md 不可作为公开政策网址。
+- 仓库公开后验证隐私政策网址：https://github.com/Tryking/xx-extension/blob/main/PRIVACY.md
+- 商店介绍/主页：https://github.com/Tryking/xx-extension
+- 公开联系邮箱待用户指定并确认。
 - 上传图标、小型宣传图和真实功能截图；示例数据需明确标注。
 - 依据后台当前问卷准确填写数据使用披露；不将本地处理误写为完全不访问用户数据。
