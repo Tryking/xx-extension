@@ -1,6 +1,8 @@
 # Chrome Web Store 提交材料
 
-状态：准备中，尚未提交审核。0.1.2 已在真实登录 X 的 Chrome 时间线验证计数和关系。账号持有人已开启两步验证，待重新上传新版。
+状态：商店草稿已创建，尚未提交审核。0.1.2 已上传，已在真实登录 X 的 Chrome 时间线连续刷新三次验证计数和关系；自动化测试和 GitHub CI 已通过。英文、中文介绍及图标、截图、宣传图已保存。隐私问卷、分发设置及审核测试说明尚待在后台填写。
+
+商店条目 ID：`khjpghbgccnkkikdmmlkoogjigojnklc`。此 ID 不代表插件已经上线。
 
 ## 中文名称与短描述
 
@@ -68,6 +70,17 @@ Site access (x.com and twitter.com): Read already-loaded user records and insert
 
 Remote code: No. All JavaScript is bundled in the extension package. No downloaded scripts, eval, or remotely executed code.
 
+## 隐私问卷填写依据 / Data disclosure rationale
+
+Local processing still counts as handling user data under the Chrome Web Store User Data Policy. The questionnaire must disclose the actual data accessed, not claim that XX never handles user data.
+
+- Personally identifiable information: X account IDs and handles, used only to match badges to authors in the current tab.
+- Authentication information: readable `twid` and `ct0` session cookies, temporarily compared in page memory solely to clear stale relationship data when the session changes. No values are forwarded, logged, persisted or uploaded.
+- Website content: already-loaded X response data and author headers, processed locally to obtain counts and relationships and attach badges.
+- Web history: X API request URLs are examined only to identify relevant existing responses. XX does not record browsing history or access other sites.
+
+These categories are a preparation aid; select the corresponding categories only after reading the current dashboard wording. XX does not sell data, use it outside its single purpose, or use it for creditworthiness or lending decisions. The public privacy policy documents these restrictions.
+
 ## 审核测试步骤 / Reviewer instructions
 
 1. Install the extension and use your own X account to sign in to x.com.
@@ -88,5 +101,5 @@ No test credentials are bundled or supplied. The extension does not operate acco
 - 商店介绍/主页：https://github.com/Tryking/xx-extension
 - 公开联系邮箱已验证：ktingdeng@gmail.com。
 - 发布者账号 kaitingdeng@gmail.com 已由用户开启两步验证。
-- 上传图标、小型宣传图和真实功能截图；示例数据需明确标注。
+- 已上传图标、小型宣传图和英文/中文功能截图；设置页的示例数据已明确标注。
 - 依据后台当前问卷准确填写数据使用披露；不将本地处理误写为完全不访问用户数据。
