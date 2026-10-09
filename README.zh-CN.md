@@ -4,7 +4,7 @@
 
 [English](README.md) · [隐私说明](PRIVACY.md) · [更新记录](CHANGELOG.md)
 
-> 当前版本：`0.1.0`，可加载的 Manifest V3 原型。已通过模拟响应及页面集成测试，尚未完成真实登录账号下的端到端验证，也未发布到 Chrome Web Store。
+> 当前版本：`0.1.1`，可加载的 Manifest V3 原型。已通过核心、页面集成及真实 Manifest 扩展测试，并在登录 X 的 Chrome 时间线验证计数和关系信息栏。部分首页响应不提供计数，未获取的字段显示未知。尚未发布到 Chrome Web Store。
 
 ## 功能
 
@@ -38,7 +38,7 @@
 
 XX 不调用 X API、不主动获取用户资料，也不保存推文正文。
 
-1. `bridge.js` 在页面主世界、`document_start` 阶段包装页面自己的 `fetch` 和 `XMLHttpRequest`，检查 X API 路径返回的 JSON。
+1. `bridge-main.js`（由共享模型和 `bridge.js` 生成）在页面主世界、`document_start` 阶段包装页面自己的 `fetch` 和 `XMLHttpRequest`，检查 X API 路径返回的 JSON。
 2. 只从响应中提取用户 ID、用户名、粉丝数、关注数和两个关注关系布尔字段。
 3. 通过同源 `postMessage` 把精简数据交给隔离世界里的 `content.js`，在那里更新时间线。
 4. 账号信息保存在当前标签页内存中，每个字段有效期为 5 分钟，最多缓存 3,000 个账号；只有设置写入本机 `chrome.storage.local`。
@@ -76,9 +76,11 @@ python3 -m playwright install chromium
 python3 -m http.server 8765 --bind 127.0.0.1
 # 终端 2：运行集成测试
 python3 tests/browser.py
+# 使用真实 Manifest 和合成 X 响应验证两个脚本环境
+python3 tests/extension.py
 ```
 
-测试使用合成的 X 响应与本地 `chrome.storage` 模拟器，覆盖字段解析、缓存过期、旧账户迟到响应、虚拟列表节点复用、语言切换、设置持久化和显示开关。它们不能替代真实 X 页面及真实扩展环境验证。
+测试使用合成的 X 响应与本地 `chrome.storage` 模拟器，覆盖字段解析、缓存过期、旧账户迟到响应、虚拟列表节点复用、语言切换、设置持久化和显示开关。真实 Manifest 测试另外将扩展装入 Chromium，覆盖网页主环境与扩展隔离环境；这些测试不能保证所有真实 X 响应的兼容性。修改共享模型或桥接源文件后，运行 `python3 package.py` 重新生成 `bridge-main.js`，避免 Chrome 对两个环境中相同脚本路径去重。
 
 生成仅包含运行文件的安装 ZIP：
 
@@ -86,12 +88,13 @@ python3 tests/browser.py
 python3 package.py
 ```
 
-输出：`dist/xx-extension-0.1.0.zip`。解压后按安装说明加载；`dist` 不纳入 Git。
+输出：`dist/xx-extension-0.1.1.zip`。解压后按安装说明加载；`dist` 不纳入 Git。
 
 ## 项目结构
 
 ```text
 manifest.json       Manifest V3 配置及最小权限声明
+bridge-main.js      生成的网页主环境脚本
 bridge.js           被动读取 X 已返回的响应
 content.js/css      时间线显示与节点更新
 shared/model.js     新旧用户字段解析、缓存

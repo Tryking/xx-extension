@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 — 2026-10-10
+
+- Fix Chrome's cross-world script-path deduplication by bundling the MAIN-world bridge separately.
+- Add a real Manifest V3 extension test with synthetic page responses.
+- Verify relationship badges in a signed-in X home timeline. Home responses may omit counts; missing fields remain unknown.
+- Make English the default README with a Simplified Chinese translation; publish the repository and verify the developer contact email.
+
 ## 0.1.0 — 2026-10-10
 
 - Initial XX Manifest V3 prototype for X timelines.
@@ -10,4 +17,4 @@
 - Per-field cache expiration and observed-session reset.
 - Core regression tests and synthetic browser integration tests.
 
-Live signed-in compatibility remains unverified.
+The initial version's live signed-in compatibility was unverified.

@@ -1,6 +1,6 @@
 # Chrome Web Store 提交材料
 
-状态：准备中，尚未提交审核。真实登录 X 环境验证和公开隐私政策链接仍需完成。
+状态：准备中，尚未提交审核。0.1.1 已在真实登录 X 的 Chrome 时间线验证计数和关系。上传被发布者账号缺少两步验证拦截，需账号持有人开启后重试。
 
 ## 中文名称与短描述
 
@@ -83,9 +83,10 @@ No test credentials are bundled or supplied. The extension does not operate acco
 ## 仍需确认
 
 - 开发者账号已注册，公开发布者显示名：The Faceless。
-- 真实 Chrome 中安装并验证 X 时间线。
-- 仓库公开后验证隐私政策网址：https://github.com/Tryking/xx-extension/blob/main/PRIVACY.md
+- 已在真实 Chrome 中安装 0.1.1，验证 X 时间线计数和关注关系。部分响应缺少计数时按设计显示未知。
+- 仓库与隐私政策已公开，匿名访问返回 HTTP 200：https://github.com/Tryking/xx-extension/blob/main/PRIVACY.md
 - 商店介绍/主页：https://github.com/Tryking/xx-extension
-- 公开联系邮箱待用户指定并确认。
+- 公开联系邮箱已验证：ktingdeng@gmail.com。
+- 发布者账号 kaitingdeng@gmail.com 需开启两步验证，当前上传被商店拦截。
 - 上传图标、小型宣传图和真实功能截图；示例数据需明确标注。
 - 依据后台当前问卷准确填写数据使用披露；不将本地处理误写为完全不访问用户数据。

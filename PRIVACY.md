@@ -11,3 +11,5 @@ The extension runs on `https://x.com/*` and `https://twitter.com/*` and requests
 No private-message content is extracted or retained. Raw JSON responses are transiently parsed locally to locate user records, then discarded. / 不提取或保留私信正文；原始 JSON 在本地临时解析以定位用户对象，随后丢弃。
 
 Uninstalling the extension removes its settings. / 卸载扩展会删除其设置。
+
+Contact / 联系方式: [ktingdeng@gmail.com](mailto:ktingdeng@gmail.com). Publisher / 发布者: The Faceless.

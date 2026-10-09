@@ -4,7 +4,7 @@
 
 English · [简体中文](README.zh-CN.md) · [Privacy](PRIVACY.md) · [Changelog](CHANGELOG.md)
 
-Version **0.1.0** is a loadable Manifest V3 prototype. Synthetic-response and browser integration tests pass. Live signed-in X compatibility and installation in a real extension environment remain unverified. No Chrome Web Store release is available.
+Version **0.1.1** is a loadable Manifest V3 prototype. Core, page integration and actual extension-manifest tests pass. Counts and relationship badges have been verified in signed-in Chrome X timelines. Some home responses omit counts, which remain unknown until the page supplies them. No Chrome Web Store release is available.
 
 ## Features
 
@@ -54,9 +54,11 @@ python3 -m playwright install chromium
 python3 -m http.server 8765 --bind 127.0.0.1
 # In another terminal:
 python3 tests/browser.py
+# Actual extension worlds with synthetic X responses:
+python3 tests/extension.py
 ```
 
-These tests mock extension storage and X data. They cover parsing, TTL, late responses after account changes, recycled timeline nodes, settings persistence, display switches and localization. They do not prove live X compatibility.
+Page integration tests mock extension storage and X data; the manifest test loads the real extension into Chromium against synthetic X responses. They cover parsing, TTL, late responses after account changes, recycled timeline nodes, settings persistence, display switches and localization. They do not guarantee compatibility with all live X responses. Run `python3 package.py` after editing `shared/model.js` or `bridge.js` to regenerate the checked-in `bridge-main.js` bundle. Chrome must use distinct script paths in its MAIN and ISOLATED worlds.
 
 Package the runtime files:
 
@@ -64,7 +66,7 @@ Package the runtime files:
 python3 package.py
 ```
 
-Extract `dist/xx-extension-0.1.0.zip` before loading it in Chrome.
+Extract `dist/xx-extension-0.1.1.zip` before loading it in Chrome.
 
 ## Limitations
 
