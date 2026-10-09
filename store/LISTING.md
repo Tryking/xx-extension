@@ -1,6 +1,6 @@
 # Chrome Web Store 提交材料
 
-状态：商店草稿已创建，尚未提交审核。0.1.2 已上传，已在真实登录 X 的 Chrome 时间线连续刷新三次验证计数和关系；自动化测试和 GitHub CI 已通过。英文、中文介绍及图标、截图、宣传图已保存。隐私问卷、分发设置及审核测试说明尚待在后台填写。
+状态：2026-10-10 已提交 0.1.2 审核，后台显示 Pending review。已设置审核通过后自动发布；当前尚未正式上线。真实登录 X 的 Chrome 时间线连续刷新三次验证计数和关系，自动化测试和 GitHub CI 已通过。英文、中文介绍及图标、截图、宣传图、隐私问卷与审核说明均已保存；分发设置为免费、公开、所有地区。
 
 商店条目 ID：`khjpghbgccnkkikdmmlkoogjigojnklc`。此 ID 不代表插件已经上线。
 
@@ -78,8 +78,9 @@ Local processing still counts as handling user data under the Chrome Web Store U
 - Authentication information: readable `twid` and `ct0` session cookies, temporarily compared in page memory solely to clear stale relationship data when the session changes. No values are forwarded, logged, persisted or uploaded.
 - Website content: already-loaded X response data and author headers, processed locally to obtain counts and relationships and attach badges.
 - Web history: X API request URLs are examined only to identify relevant existing responses. XX does not record browsing history or access other sites.
+- User activity: existing X fetch/XHR responses are observed locally. No click, keystroke or mouse-movement logging is performed.
 
-These categories are a preparation aid; select the corresponding categories only after reading the current dashboard wording. XX does not sell data, use it outside its single purpose, or use it for creditworthiness or lending decisions. The public privacy policy documents these restrictions.
+The five corresponding categories above were disclosed after reading the current dashboard wording. XX does not sell data, use it outside its single purpose, or use it for creditworthiness or lending decisions. The public privacy policy documents these restrictions.
 
 ## 审核测试步骤 / Reviewer instructions
 
@@ -93,7 +94,7 @@ These categories are a preparation aid; select the corresponding categories only
 
 No test credentials are bundled or supplied. The extension does not operate accounts or publish posts.
 
-## 仍需确认
+## 提交记录
 
 - 开发者账号已注册，公开发布者显示名：The Faceless。
 - 已在真实 Chrome 中安装 0.1.2，验证 X 时间线计数和关注关系。已修复首页新计数字段解析，并验证多次刷新；真正缺失字段按设计显示未知。
@@ -102,4 +103,6 @@ No test credentials are bundled or supplied. The extension does not operate acco
 - 公开联系邮箱已验证：ktingdeng@gmail.com。
 - 发布者账号 kaitingdeng@gmail.com 已由用户开启两步验证。
 - 已上传图标、小型宣传图和英文/中文功能截图；设置页的示例数据已明确标注。
-- 依据后台当前问卷准确填写数据使用披露；不将本地处理误写为完全不访问用户数据。
+- 已依据后台当前问卷填写数据使用披露，不将本地处理误写为完全不访问用户数据。
+- 已保存英文审核步骤；不向审核人员提供个人账号密码。
+- 提交确认窗口显示 Your extension was submitted for review；条目状态为 Pending review。
