@@ -10,6 +10,8 @@ The extension runs on `https://x.com/*` and `https://twitter.com/*` and requests
 
 No private-message content is extracted or retained. Raw JSON responses are transiently parsed locally to locate user records, then discarded. / 不提取或保留私信正文；原始 JSON 在本地临时解析以定位用户对象，随后丢弃。
 
+XX examines the URLs of existing X API requests to identify relevant responses and observes those responses locally. It does not keep a browsing-history log or monitor clicks, keystrokes, mouse movements or visits to other sites. / XX 在本机检查现有 X API 请求的网址以识别相关响应，并观察这些响应；不保存浏览历史日志，不记录点击、按键、鼠标移动或其他网站的访问。
+
 XX uses this data only to display account counts and follow relationships and to clear stale data when the X session changes. It does not sell or share user data, use it for advertising, or use it for creditworthiness or lending decisions. XX's use of information complies with the Chrome Web Store User Data Policy, including its Limited Use requirements. / XX 仅将这些数据用于显示账号计数、关注关系及在 X 会话变化时清除旧数据；不出售或分享用户数据，不用于广告、信用评估或借贷决策。XX 对信息的使用遵守 Chrome Web Store 用户数据政策，包括受限使用要求。
 
 Uninstalling the extension removes its settings. / 卸载扩展会删除其设置。
