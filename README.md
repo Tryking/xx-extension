@@ -4,7 +4,7 @@
 
 English · [简体中文](README.zh-CN.md) · [Privacy](PRIVACY.md) · [Changelog](CHANGELOG.md)
 
-Version **0.1.1** is a loadable Manifest V3 prototype. Core, page integration and actual extension-manifest tests pass. Counts and relationship badges have been verified in signed-in Chrome X timelines. Some home responses omit counts, which remain unknown until the page supplies them. No Chrome Web Store release is available.
+Version **0.1.2** is a loadable Manifest V3 prototype. Core, page integration and actual extension-manifest tests pass. Counts and relationship badges have been verified in signed-in Chrome X timelines. Repeated home-timeline refreshes have been tested with X's current `relationship_counts` schema. Fields omitted by a response remain unknown. No Chrome Web Store release is available.
 
 ## Features
 
@@ -32,7 +32,7 @@ The MAIN-world bridge observes JSON returned by X's own `fetch` and `XMLHttpRequ
 
 Account records remain in tab memory, capped at 3,000 users with a five-minute TTL per field. Only display preferences persist in `chrome.storage.local`. There is no backend, telemetry or external upload.
 
-Legacy `legacy.screen_name` and newer `core.screen_name` structures are supported; following counts use `friends_count`. Relationship fields accept explicit booleans only. Missing or null fields remain unknown.
+Legacy `legacy.screen_name` and newer `core.screen_name` structures are supported; counts prefer the current `relationship_counts.followers` / `relationship_counts.following` fields and fall back to legacy `followers_count` / `friends_count`. Relationship fields accept explicit booleans only. Missing or null fields remain unknown.
 
 The bridge compares readable `twid` / `ct0` cookies locally to detect session changes. Cookie values never cross the bridge. A change clears the cache and rejects stale responses. If the cookies cannot be read or a switch is not observable, refresh the tab after switching accounts.
 
@@ -66,7 +66,7 @@ Package the runtime files:
 python3 package.py
 ```
 
-Extract `dist/xx-extension-0.1.1.zip` before loading it in Chrome.
+Extract `dist/xx-extension-0.1.2.zip` before loading it in Chrome.
 
 ## Limitations
 

@@ -3,6 +3,21 @@ import assert from "node:assert/strict";
 import "../shared/model.js";
 import "../shared/i18n.js";
 const { normalizeUser, collectUsers, UserCache } = globalThis.XXModel;
+test("current relationship_counts schema takes precedence with legacy fallback", () => {
+  const raw = { __typename: "User", rest_id: "42", core: { screen_name: "Alice" },
+    relationship_counts: { followers: 0, following: 8 },
+    relationship_perspectives: { followed_by: false, following: true },
+    legacy: { followers_count: 100, friends_count: 99 } };
+  assert.equal(normalizeUser(raw).followers, 0);
+  assert.equal(normalizeUser(raw).following, 8);
+  assert.equal(normalizeUser(raw).youFollow, true);
+  raw.relationship_counts = { followers: null, following: "8" };
+  assert.equal(normalizeUser(raw).followers, 100);
+  assert.equal(normalizeUser(raw).following, 99);
+  delete raw.legacy;
+  assert.equal(normalizeUser(raw).followers, undefined);
+  assert.equal(normalizeUser(raw).following, undefined);
+});
 test("new and legacy user schemas preserve false and zero", () => {
   const user = normalizeUser({
     __typename: "User",

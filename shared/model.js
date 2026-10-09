@@ -16,8 +16,8 @@
     return {
       id: String(id),
       handle: handle.toLowerCase(),
-      followers: number(legacy.followers_count),
-      following: number(legacy.friends_count),
+      followers: number(raw.relationship_counts?.followers) ?? number(legacy.followers_count),
+      following: number(raw.relationship_counts?.following) ?? number(legacy.friends_count),
       followsYou: boolean(rel.followed_by, legacy.followed_by),
       youFollow: boolean(rel.following, legacy.following),
     };

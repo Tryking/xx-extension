@@ -16,15 +16,20 @@ with TemporaryDirectory() as profile, sync_playwright() as p:
         content_type='text/html', body=html))
     context.route('https://x.com/i/api/graphql/**', lambda route: route.fulfill(
         content_type='application/json', body='''{"user":{"rest_id":"1",
-        "legacy":{"screen_name":"alice","followers_count":12345,
-        "friends_count":8,"following":true,"followed_by":true}}}'''))
+        "core":{"screen_name":"alice"},
+        "relationship_counts":{"followers":12345,"following":8},
+        "relationship_perspectives":{"following":true,"followed_by":true}}}'''))
     page = context.new_page()
     page.on('console', lambda message: print(message.text) if message.type == 'error' else None)
     page.on('pageerror', lambda error: print(str(error)))
-    page.goto('https://x.com/home')
-    page.wait_for_selector('.xx-account-info')
-    page.evaluate("fetch('/i/api/graphql/test/HomeTimeline')")
-    page.wait_for_function("document.querySelector('.xx-account-info').textContent.includes('Mutual follow')")
-    assert '12.3K followers' in page.locator('.xx-account-info').inner_text()
+    for refresh in range(3):
+        if refresh == 0:
+            page.goto('https://x.com/home')
+        else:
+            page.reload()
+        page.wait_for_selector('.xx-account-info')
+        page.wait_for_function("document.querySelector('.xx-account-info').textContent.includes('Mutual follow')")
+        assert '12.3K followers' in page.locator('.xx-account-info').inner_text()
+        assert '8 following' in page.locator('.xx-account-info').inner_text()
     context.close()
 print('PASS: actual manifest, isolated content scripts, main-world bridge and local storage')

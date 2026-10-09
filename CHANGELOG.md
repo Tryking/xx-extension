@@ -1,10 +1,16 @@
 # Changelog
 
+## 0.1.2 — 2026-10-10
+
+- Read follower and following counts from X's current `relationship_counts` fields, with legacy fallback.
+- Fix unknown counts after refreshing the home timeline; verify repeated reloads in signed-in Chrome.
+- Add regression coverage for current fields, zero counts, invalid/missing counts and repeated manifest-test reloads.
+
 ## 0.1.1 — 2026-10-10
 
 - Fix Chrome's cross-world script-path deduplication by bundling the MAIN-world bridge separately.
 - Add a real Manifest V3 extension test with synthetic page responses.
-- Verify relationship badges in a signed-in X home timeline. Home responses may omit counts; missing fields remain unknown.
+- Verify relationship badges in a signed-in X home timeline. The current count schema was still unsupported in this version.
 - Make English the default README with a Simplified Chinese translation; publish the repository and verify the developer contact email.
 
 ## 0.1.0 — 2026-10-10

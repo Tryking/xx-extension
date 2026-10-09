@@ -4,7 +4,7 @@
 
 [English](README.md) · [隐私说明](PRIVACY.md) · [更新记录](CHANGELOG.md)
 
-> 当前版本：`0.1.1`，可加载的 Manifest V3 原型。已通过核心、页面集成及真实 Manifest 扩展测试，并在登录 X 的 Chrome 时间线验证计数和关系信息栏。部分首页响应不提供计数，未获取的字段显示未知。尚未发布到 Chrome Web Store。
+> 当前版本：`0.1.2`，可加载的 Manifest V3 原型。已通过核心、页面集成及真实 Manifest 扩展测试，并在登录 X 的 Chrome 时间线验证计数和关系信息栏。已验证多次刷新首页，支持新的 `relationship_counts` 计数字段；真正缺失的字段仍显示未知。尚未发布到 Chrome Web Store。
 
 ## 功能
 
@@ -88,7 +88,7 @@ python3 tests/extension.py
 python3 package.py
 ```
 
-输出：`dist/xx-extension-0.1.1.zip`。解压后按安装说明加载；`dist` 不纳入 Git。
+输出：`dist/xx-extension-0.1.2.zip`。解压后按安装说明加载；`dist` 不纳入 Git。
 
 ## 项目结构
 
@@ -97,7 +97,7 @@ manifest.json       Manifest V3 配置及最小权限声明
 bridge-main.js      生成的网页主环境脚本
 bridge.js           被动读取 X 已返回的响应
 content.js/css      时间线显示与节点更新
-shared/model.js     新旧用户字段解析、缓存
+shared/model.js     新旧用户与 relationship_counts 字段解析、缓存
 shared/i18n.js      中英文文案、数字格式、设置校验
 options.html        完整设置页
 popup.html          总开关与设置入口
