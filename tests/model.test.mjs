@@ -66,11 +66,13 @@ test("nested timeline traversal merges only observed fields", () => {
   assert.equal(users[0].followers, 8);
   assert.equal(users[0].youFollow, false);
 });
-test("partial updates do not prolong relationship TTL; changed IDs do not inherit fields", () => {
+test("old snapshots remain available with field-specific freshness; changed IDs and eviction clear data", () => {
   const cache = new UserCache(100, 2);
   cache.put({ id: "1", handle: "a", followers: 8, followsYou: true }, 0);
   cache.put({ id: "1", handle: "a", followers: 9 }, 80);
-  assert.equal(cache.get("a", 101).followsYou, undefined);
+  assert.equal(cache.get("a", 101).followsYou, true);
+  assert.equal(cache.get("a", 101).stale.followsYou, true);
+  assert.equal(cache.get("a", 101).stale.followers, false);
   assert.equal(cache.get("a", 101).followers, 9);
   cache.put({ id: "2", handle: "a", following: 4 }, 110);
   assert.equal(cache.get("a", 111).followers, undefined);
@@ -79,6 +81,21 @@ test("partial updates do not prolong relationship TTL; changed IDs do not inheri
   assert.equal(cache.get("a", 140), null);
   cache.clear();
   assert.equal(cache.get("b", 140), null);
+});
+test("scrolling back retains observed zero/false values with localized stale tooltips", () => {
+  const cache = new UserCache();
+  cache.put({id:"1",handle:"alice",followers:0,following:8,followsYou:false,youFollow:false}, 0);
+  const user = cache.get("alice", 360000);
+  for (const language of ["en", "zh_CN"]) {
+    const parts = XXI18n.parts(user, {...XXI18n.defaults, language});
+    assert.ok(parts.every(part => part.title.includes(XXI18n.messages[language].stale)));
+    assert.ok(parts.every(part => !part.text.includes(XXI18n.messages[language].unknownCount)));
+  }
+  cache.put({id:"1",handle:"alice",followers:10}, 360001);
+  assert.equal(cache.get("alice", 360002).stale.followers, false);
+  assert.equal(cache.get("alice", 360002).stale.youFollow, true);
+  cache.clear();
+  assert.equal(cache.get("alice", 360003), null);
 });
 test("missing relationships never imply no connection; localized formatting", () => {
   const { parts, defaults, messages } = XXI18n;

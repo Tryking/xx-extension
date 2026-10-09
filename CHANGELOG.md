@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3 — 2026-10-10
+
+- Preserve already received account data during long reading and scrolling sessions instead of replacing it with unknown after five minutes.
+- Mark older snapshots in English/Chinese hover tooltips; refresh fields independently when X supplies new data.
+- Keep the 3,000-account memory limit and clear snapshots on observed account/session changes.
+- Test delayed display, recycled timeline rows, partial refreshes and stale zero/false values.
+
 ## 0.1.2 — 2026-10-10
 
 - Read follower and following counts from X's current `relationship_counts` fields, with legacy fallback.

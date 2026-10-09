@@ -44,8 +44,8 @@
     return [...users.values()];
   }
   class UserCache {
-    constructor(ttl = 300000, limit = 3000) {
-      this.ttl = ttl;
+    constructor(freshFor = 300000, limit = 3000) {
+      this.freshFor = freshFor;
       this.limit = limit;
       this.entries = new Map();
     }
@@ -81,9 +81,16 @@
     get(handle, now = Date.now()) {
       const entry = this.entries.get(handle.toLowerCase());
       if (!entry) return null;
-      const result = { id: entry.id, handle: entry.handle };
-      for (const field of fields)
-        if (now - entry.times[field] < this.ttl) result[field] = entry[field];
+      // X can prefetch a timeline long before its virtual rows are displayed.
+      // Age marks a snapshot as stale; it must not erase already observed data.
+      this.entries.delete(entry.handle);
+      this.entries.set(entry.handle, entry);
+      const result = { id: entry.id, handle: entry.handle, stale: {} };
+      for (const field of fields) {
+        if (entry[field] === undefined) continue;
+        result[field] = entry[field];
+        result.stale[field] = now - entry.times[field] >= this.freshFor;
+      }
       return result;
     }
   }

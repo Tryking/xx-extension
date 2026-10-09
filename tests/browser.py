@@ -21,6 +21,7 @@ with sync_playwright() as p:
  page.emulate_media(color_scheme='dark');page.locator('#language').select_option('en');page.screenshot(path=str(out/'settings-en-dark.png'),full_page=True)
  page.goto(origin+'/options.html');page.wait_for_load_state('networkidle')
  page.set_content('''<article data-testid="tweet"><div><div data-testid="User-Name"><a href="/alice">Alice</a></div></div><p>Example tweet</p></article>''')
+ page.evaluate("window.testNow=0;Date.now=()=>window.testNow")
  for name in ['shared/model.js','shared/i18n.js','content.js']:page.add_script_tag(path=str(root/name))
  page.wait_for_selector('.xx-account-info');assert 'unknown' in page.locator('.xx-account-info').inner_text()
  def emit(users,epoch=0):
@@ -28,13 +29,22 @@ with sync_playwright() as p:
  emit([{'id':'1','handle':'alice','followers':12345,'following':8,'followsYou':True,'youFollow':True}])
  page.wait_for_function("document.querySelector('.xx-account-info').textContent.includes('Mutual follow')")
  assert '12.3K' in page.locator('.xx-account-info').inner_text()
+ # Long reading/prefetch delay must not turn observed data into unknown.
+ page.evaluate("window.testNow=360001;document.body.append(document.createElement('br'))")
+ page.wait_for_function("document.querySelector('.xx-account-info span').title.includes('more than 5 minutes')")
+ assert '12.3K' in page.locator('.xx-account-info').inner_text()
+ assert 'Mutual follow' in page.locator('.xx-account-info').inner_text()
  # recycled virtual timeline node must no longer display Alice's numbers
  page.locator('[data-testid="User-Name"] a').evaluate("a=>{a.href='/bob';a.textContent='Bob'}")
  page.wait_for_function("document.querySelector('.xx-account-info').textContent.includes('unknown followers')")
  emit([{'id':'2','handle':'bob','followers':7,'following':0,'followsYou':False,'youFollow':False}])
  page.wait_for_function("document.querySelector('.xx-account-info').textContent.includes('No follow connection')")
+ # Virtual rows reused for an earlier author still show that author's snapshot.
+ page.locator('[data-testid="User-Name"] a').evaluate("a=>{a.href='/alice';a.textContent='Alice'}")
+ page.wait_for_function("document.querySelector('.xx-account-info').textContent.includes('12.3K')")
+ assert 'Mutual follow' in page.locator('.xx-account-info').inner_text()
  emit([],1);page.wait_for_function("document.querySelector('.xx-account-info').textContent.includes('unknown followers')")
- emit([{'id':'2','handle':'bob','followers':999}],0)
+ emit([{'id':'1','handle':'alice','followers':999}],0)
  page.wait_for_timeout(100);assert '999' not in page.locator('.xx-account-info').inner_text()
  page.evaluate("chrome.storage.local.set({settings:{enabled:false}})");page.wait_for_function("!document.querySelector('.xx-account-info')")
  page.evaluate("chrome.storage.local.set({settings:{enabled:true,position:'inline'}})");page.wait_for_selector('[data-testid="User-Name"] .xx-account-info')

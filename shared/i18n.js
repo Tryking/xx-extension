@@ -43,6 +43,7 @@
       unknown: "Relationship unknown",
       pending: "Waiting for page data",
       unknownCount: "unknown",
+      stale: "Last received more than 5 minutes ago; may have changed.",
     },
     zh_CN: {
       title: "X 增强工具箱",
@@ -78,6 +79,7 @@
       unknown: "关注关系未知",
       pending: "等待页面数据",
       unknownCount: "未知",
+      stale: "上次收到的数据已超过 5 分钟，可能已变化。",
     },
   };
   function locale(settings) {
@@ -123,18 +125,20 @@
     ])
       if (settings[field]) {
         const n = count(user?.[field], settings);
+        const title = user?.[field] === undefined
+          ? t.pending
+          : user[field].toLocaleString(lang === "zh_CN" ? "zh-CN" : "en-US");
         result.push({
           text: lang === "zh_CN" ? `${t[label]} ${n}` : `${n} ${t[label]}`,
-          title:
-            user?.[field] === undefined
-              ? t.pending
-              : user[field].toLocaleString(
-                  lang === "zh_CN" ? "zh-CN" : "en-US",
-                ),
+          title: user?.stale?.[field] ? `${title} · ${t.stale}` : title,
         });
       }
     if (settings.relationship)
-      result.push({ text: relation(user, t), title: t.relationship });
+      result.push({
+        text: relation(user, t),
+        title: user?.stale?.followsYou || user?.stale?.youFollow
+          ? `${t.relationship} · ${t.stale}` : t.relationship,
+      });
     return result;
   }
   function sanitize(input) {

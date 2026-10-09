@@ -4,7 +4,7 @@
 
 English · [简体中文](README.zh-CN.md) · [Privacy](PRIVACY.md) · [Changelog](CHANGELOG.md)
 
-Version **0.1.2** is a loadable Manifest V3 prototype. Core, page integration and actual extension-manifest tests pass. Counts and relationship badges have been verified in signed-in Chrome X timelines. Repeated home-timeline refreshes have been tested with X's current `relationship_counts` schema. Fields omitted by a response remain unknown. No Chrome Web Store release is available.
+Version **0.1.3** is a loadable Manifest V3 prototype. Core, page integration and actual extension-manifest tests pass. Counts and relationship badges have been verified in signed-in Chrome X timelines. Repeated home-timeline refreshes have been tested with X's current `relationship_counts` schema. Fields omitted by a response remain unknown. No Chrome Web Store release is available.
 
 ## Features
 
@@ -30,7 +30,7 @@ After an update, reload the extension and refresh X. Unknown values mean the pag
 
 The MAIN-world bridge observes JSON returned by X's own `fetch` and `XMLHttpRequest` calls. It extracts only user IDs, handles, counts and boolean follow fields, then sends those records to an isolated content script via same-origin messages. It makes no additional API calls.
 
-Account records remain in tab memory, capped at 3,000 users with a five-minute TTL per field. Only display preferences persist in `chrome.storage.local`. There is no backend, telemetry or external upload.
+Account records remain in tab memory, capped at 3,000 users with per-field freshness timestamps. Previously received values remain available for the current session; tooltips warn when they are more than five minutes old. Only display preferences persist in `chrome.storage.local`. There is no backend, telemetry or external upload.
 
 Legacy `legacy.screen_name` and newer `core.screen_name` structures are supported; counts prefer the current `relationship_counts.followers` / `relationship_counts.following` fields and fall back to legacy `followers_count` / `friends_count`. Relationship fields accept explicit booleans only. Missing or null fields remain unknown.
 
@@ -58,7 +58,7 @@ python3 tests/browser.py
 python3 tests/extension.py
 ```
 
-Page integration tests mock extension storage and X data; the manifest test loads the real extension into Chromium against synthetic X responses. They cover parsing, TTL, late responses after account changes, recycled timeline nodes, settings persistence, display switches and localization. They do not guarantee compatibility with all live X responses. Run `python3 package.py` after editing `shared/model.js` or `bridge.js` to regenerate the checked-in `bridge-main.js` bundle. Chrome must use distinct script paths in its MAIN and ISOLATED worlds.
+Page integration tests mock extension storage and X data; the manifest test loads the real extension into Chromium against synthetic X responses. They cover parsing, stale snapshots during long reading sessions, late responses after account changes, recycled timeline nodes, settings persistence, display switches and localization. They do not guarantee compatibility with all live X responses. Run `python3 package.py` after editing `shared/model.js` or `bridge.js` to regenerate the checked-in `bridge-main.js` bundle. Chrome must use distinct script paths in its MAIN and ISOLATED worlds.
 
 Package the runtime files:
 
@@ -66,7 +66,7 @@ Package the runtime files:
 python3 package.py
 ```
 
-Extract `dist/xx-extension-0.1.2.zip` before loading it in Chrome.
+Extract `dist/xx-extension-0.1.3.zip` before loading it in Chrome.
 
 ## Limitations
 

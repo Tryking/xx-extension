@@ -4,7 +4,7 @@
 
 [English](README.md) · [隐私说明](PRIVACY.md) · [更新记录](CHANGELOG.md)
 
-> 当前版本：`0.1.2`，可加载的 Manifest V3 原型。已通过核心、页面集成及真实 Manifest 扩展测试，并在登录 X 的 Chrome 时间线验证计数和关系信息栏。已验证多次刷新首页，支持新的 `relationship_counts` 计数字段；真正缺失的字段仍显示未知。尚未发布到 Chrome Web Store。
+> 当前版本：`0.1.3`，可加载的 Manifest V3 原型。已通过核心、页面集成及真实 Manifest 扩展测试，并在登录 X 的 Chrome 时间线验证计数和关系信息栏。已验证多次刷新首页，支持新的 `relationship_counts` 计数字段；真正缺失的字段仍显示未知。尚未发布到 Chrome Web Store。
 
 ## 功能
 
@@ -41,7 +41,7 @@ XX 不调用 X API、不主动获取用户资料，也不保存推文正文。
 1. `bridge-main.js`（由共享模型和 `bridge.js` 生成）在页面主世界、`document_start` 阶段包装页面自己的 `fetch` 和 `XMLHttpRequest`，检查 X API 路径返回的 JSON。
 2. 只从响应中提取用户 ID、用户名、粉丝数、关注数和两个关注关系布尔字段。
 3. 通过同源 `postMessage` 把精简数据交给隔离世界里的 `content.js`，在那里更新时间线。
-4. 账号信息保存在当前标签页内存中，每个字段有效期为 5 分钟，最多缓存 3,000 个账号；只有设置写入本机 `chrome.storage.local`。
+4. 账号信息保存在当前标签页内存中，最多缓存 3,000 个账号；已收到的数据保留至当前会话结束，超过 5 分钟的字段会在悬停提示中标明可能已变化；只有设置写入本机 `chrome.storage.local`。
 
 兼容的字段包括旧版 `legacy.screen_name`、新版 `core.screen_name`（以及 `legacy.core.screen_name`），计数字段 `followers_count`、`friends_count`，关注关系 `relationship_perspectives.followed_by/following` 与旧版 `legacy` 字段。关系只接受明确的布尔值；缺失、`null` 或非布尔值均视为未知。
 
@@ -88,7 +88,7 @@ python3 tests/extension.py
 python3 package.py
 ```
 
-输出：`dist/xx-extension-0.1.2.zip`。解压后按安装说明加载；`dist` 不纳入 Git。
+输出：`dist/xx-extension-0.1.3.zip`。解压后按安装说明加载；`dist` 不纳入 Git。
 
 ## 项目结构
 

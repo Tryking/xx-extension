@@ -2,7 +2,7 @@
 
 XX has no server, telemetry, analytics SDK or external data upload. It does not send extra X API requests. / XX 无服务端、遥测、统计 SDK 或外部数据上传，不额外请求 X API。
 
-Only display settings persist locally through `chrome.storage.local`. Account IDs, handles, follower counts, following counts and boolean relationship fields stay in tab memory; closing or refreshing the tab clears them. Each cached field expires after five minutes. / 只在本机持久保存显示设置；账号 ID、用户名、计数和关系布尔值仅保存在标签页内存，关闭或刷新即清空，字段五分钟过期。
+Only display settings persist locally through `chrome.storage.local`. Account IDs, handles, follower counts, following counts and boolean relationship fields stay in tab memory; closing or refreshing the tab clears them. Previously received fields remain in the bounded cache for the current X session; after five minutes their tooltips indicate that the snapshot may have changed. Switching accounts clears the cache when a session change is observed. / 只在本机持久保存显示设置；账号 ID、用户名、计数和关系布尔值仅保存在标签页内存，关闭或刷新即清空，本次 X 会话已收到的字段保留在有数量上限的缓存中，超过五分钟时悬停提示会标明数据可能已变化；检测到账号会话变化时清空缓存。
 
 The page bridge temporarily reads readable session cookies (`twid` and `ct0`) to compare account/session changes. Cookie values are not sent through the bridge, logged, persisted or uploaded. The shared page world can affect bridge behavior. / 桥接脚本在页面内临时读取可访问的会话 Cookie 以检测变化；值不通过消息传送、不记录、不持久化、不上传。网页主世界中的脚本可以影响桥接行为。
 
